@@ -6018,6 +6018,18 @@ function copyTempDouble(ptr) {
       // backing the page canvas element
     }
 
+  function _srand(seed) {
+      HEAP32[((___rand_seed)>>2)]=seed
+    }
+
+  function _time(ptr) {
+      var ret = Math.floor(Date.now()/1000);
+      if (ptr) {
+        HEAP32[((ptr)>>2)]=ret;
+      }
+      return ret;
+    }
+
   function _SDL_Init(initFlags) {
       SDL.startTime = Date.now();
       SDL.initFlags = initFlags;
@@ -8589,14 +8601,6 @@ function copyTempDouble(ptr) {
       return ret;  // Previous break location.
     }
 
-  function _time(ptr) {
-      var ret = Math.floor(Date.now()/1000);
-      if (ptr) {
-        HEAP32[((ptr)>>2)]=ret;
-      }
-      return ret;
-    }
-
   function ___cxa_call_unexpected(exception) {
       Module.printErr('Unexpected exception thrown, this is not properly supported - aborting');
       ABORT = true;
@@ -9891,6 +9895,28 @@ function __Z11write_pixeliij($i,$j,$color){
 }
 
 
+function __Z10read_pixelii($i,$j){
+ var label=0;
+ var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+
+ var $1;
+ var $2;
+ $1=$i;
+ $2=$j;
+ var $3=HEAP32[((9792)>>2)];
+ var $4=(($3+20)|0);
+ var $5=HEAP32[(($4)>>2)];
+ var $6=$5;
+ var $7=$2;
+ var $8=($7<<8);
+ var $9=(($6+($8<<2))|0);
+ var $10=$1;
+ var $11=(($9+($10<<2))|0);
+ var $12=HEAP32[(($11)>>2)];
+ STACKTOP=sp;return $12;
+}
+
+
 function __Z14write_particleiij($i,$j,$color){
  var label=0;
  var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -9965,6 +9991,7 @@ function __Z17get_particle_infoiiPjPi($i,$j,$color,$border){
  var $p2=(sp)+(32);
  var $p3=(sp)+(48);
  var $p4=(sp)+(64);
+ var $dhash;
  var $b;
  $1=$i;
  $2=$j;
@@ -10025,49 +10052,83 @@ function __Z17get_particle_infoiiPjPi($i,$j,$color,$border){
  HEAP32[(($45)>>2)]=1;
  label=7;break;
  case 7: 
- var $47=$4;
+ var $47=(($p+8)|0);
  var $48=HEAP32[(($47)>>2)];
- var $49=($48|0)!=0;
- var $50=($49?(0.9):1);
- var $51=$50;
- $b=$51;
- var $52=(($p)|0);
- var $53=HEAP32[(($52)>>2)];
- if(($53|0)==4){ label=8;break;}else if(($53|0)==1){ label=9;break;}else{label=10;break;}
- case 8: 
- var $55=HEAP32[((9792)>>2)];
- var $56=(($55+4)|0);
+ var $49=($48|0);
+ var $50=($49)/(16777215);
+ $dhash=$50;
+ var $51=$4;
+ var $52=HEAP32[(($51)>>2)];
+ var $53=($52|0)!=0;
+ var $54=($53?(0.9):1);
+ var $55=$54;
+ $b=$55;
+ var $56=(($p)|0);
  var $57=HEAP32[(($56)>>2)];
- var $58=$b;
- var $59=($58)*(255);
- var $60=($59>=0 ? Math_floor($59) : Math_ceil($59));
- var $61=$b;
- var $62=($61)*(255);
- var $63=($62>=0 ? Math_floor($62) : Math_ceil($62));
- var $64=_SDL_MapRGBA($57,$60,$63,0,0);
- var $65=$3;
- HEAP32[(($65)>>2)]=$64;
- label=11;break;
+ if(($57|0)==1){ label=10;break;}else if(($57|0)==4){ label=8;break;}else if(($57|0)==9){ label=9;break;}else{label=11;break;}
+ case 8: 
+ var $59=HEAP32[((9792)>>2)];
+ var $60=(($59+4)|0);
+ var $61=HEAP32[(($60)>>2)];
+ var $62=$b;
+ var $63=($62)*(255);
+ var $64=($63>=0 ? Math_floor($63) : Math_ceil($63));
+ var $65=$b;
+ var $66=($65)*(255);
+ var $67=($66>=0 ? Math_floor($66) : Math_ceil($66));
+ var $68=_SDL_MapRGBA($61,$64,$67,0,0);
+ var $69=$3;
+ HEAP32[(($69)>>2)]=$68;
+ label=12;break;
  case 9: 
- var $67=HEAP32[((9792)>>2)];
- var $68=(($67+4)|0);
- var $69=HEAP32[(($68)>>2)];
- var $70=$b;
- var $71=($70)*(255);
- var $72=($71>=0 ? Math_floor($71) : Math_ceil($71));
- var $73=_SDL_MapRGBA($69,0,0,$72,0);
- var $74=$3;
- HEAP32[(($74)>>2)]=$73;
- label=11;break;
+ var $71=$dhash;
+ var $72=($71)/(10);
+ $dhash=$72;
+ var $73=HEAP32[((9792)>>2)];
+ var $74=(($73+4)|0);
+ var $75=HEAP32[(($74)>>2)];
+ var $76=$dhash;
+ var $77=($76)+(204);
+ var $78=$b;
+ var $79=$78;
+ var $80=($77)*($79);
+ var $81=($80>=0 ? Math_floor($80) : Math_ceil($80));
+ var $82=$dhash;
+ var $83=($82)+(204);
+ var $84=$b;
+ var $85=$84;
+ var $86=($83)*($85);
+ var $87=($86>=0 ? Math_floor($86) : Math_ceil($86));
+ var $88=$dhash;
+ var $89=($88)+(204);
+ var $90=$b;
+ var $91=$90;
+ var $92=($89)*($91);
+ var $93=($92>=0 ? Math_floor($92) : Math_ceil($92));
+ var $94=_SDL_MapRGBA($75,$81,$87,$93,0);
+ var $95=$3;
+ HEAP32[(($95)>>2)]=$94;
+ label=12;break;
  case 10: 
- var $76=HEAP32[((9792)>>2)];
- var $77=(($76+4)|0);
- var $78=HEAP32[(($77)>>2)];
- var $79=_SDL_MapRGBA($78,0,0,0,0);
- var $80=$3;
- HEAP32[(($80)>>2)]=$79;
- label=11;break;
+ var $97=HEAP32[((9792)>>2)];
+ var $98=(($97+4)|0);
+ var $99=HEAP32[(($98)>>2)];
+ var $100=$b;
+ var $101=($100)*(255);
+ var $102=($101>=0 ? Math_floor($101) : Math_ceil($101));
+ var $103=_SDL_MapRGBA($99,0,0,$102,0);
+ var $104=$3;
+ HEAP32[(($104)>>2)]=$103;
+ label=12;break;
  case 11: 
+ var $106=HEAP32[((9792)>>2)];
+ var $107=(($106+4)|0);
+ var $108=HEAP32[(($107)>>2)];
+ var $109=_SDL_MapRGBA($108,127,-52,-1,0);
+ var $110=$3;
+ HEAP32[(($110)>>2)]=$109;
+ label=12;break;
+ case 12: 
  STACKTOP=sp;return;
   default: assert(0, "bad label: " + label);
  }
@@ -11201,6 +11262,224 @@ function ___Z10shape_fillIZ12handle_mouseiihE3$_2EviiiiT_i_($shape,$x,$y,$size,$
 }
 
 
+function __Z11SDL_GetRGBAjPhS_S_S_($color,$r,$g,$b,$a){
+ var label=0;
+ var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+
+ var $1;
+ var $2;
+ var $3;
+ var $4;
+ var $5;
+ $1=$color;
+ $2=$r;
+ $3=$g;
+ $4=$b;
+ $5=$a;
+ var $6=$1;
+ var $7=$6&255;
+ var $8=(($7)&255);
+ var $9=$4;
+ HEAP8[($9)]=$8;
+ var $10=$1;
+ var $11=$10&255;
+ var $12=(($11)&255);
+ var $13=$3;
+ HEAP8[($13)]=$12;
+ var $14=$1;
+ var $15=$14&0;
+ var $16=(($15)&255);
+ var $17=$2;
+ HEAP8[($17)]=$16;
+ STACKTOP=sp;return;
+}
+
+
+function __Z12write_cursorii($i,$j){
+ var label=0;
+ var sp=STACKTOP;STACKTOP=(STACKTOP+8)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+
+ var $1;
+ var $2;
+ var $3=sp;
+ $1=$i;
+ $2=$j;
+ var $4=$1;
+ var $5=$2;
+ ___Z10shape_fillIZ12write_cursoriiE3$_3EviiiiT_i_(1,$4,$5,4,$3,0);
+ STACKTOP=sp;return;
+}
+
+
+function ___Z10shape_fillIZ12write_cursoriiE3$_3EviiiiT_i_($shape,$x,$y,$size,$f,$dir){
+ var label=0;
+ var sp=STACKTOP;STACKTOP=(STACKTOP+16)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+ var tempParam = $f; $f=STACKTOP;STACKTOP = (STACKTOP + 1)|0;STACKTOP = (((STACKTOP)+7)&-8);(assert((STACKTOP|0) < (STACK_MAX|0))|0);;;HEAP8[($f)]=HEAP8[(tempParam)];
+ label = 1; 
+ while(1)switch(label){
+ case 1: 
+ var $1;
+ var $2;
+ var $3;
+ var $4;
+ var $5;
+ var $i=sp;
+ var $j=(sp)+(8);
+ var $k;
+ var $l;
+ var $down;
+ var $up;
+ var $left;
+ var $right;
+ $1=$shape;
+ $2=$x;
+ $3=$y;
+ $4=$size;
+ $5=$dir;
+ var $6=$4;
+ var $7=(((-$6))|0);
+ $k=$7;
+ label=2;break;
+ case 2: 
+ var $9=$k;
+ var $10=$4;
+ var $11=($9|0)<=($10|0);
+ if($11){label=3;break;}else{label=24;break;}
+ case 3: 
+ var $13=$4;
+ var $14=(((-$13))|0);
+ $l=$14;
+ label=4;break;
+ case 4: 
+ var $16=$l;
+ var $17=$4;
+ var $18=($16|0)<=($17|0);
+ if($18){label=5;break;}else{label=22;break;}
+ case 5: 
+ var $20=$k;
+ var $21=$5;
+ var $22=(((($21|0))/(2))&-1);
+ var $23=($22|0)!=0;
+ if($23){label=6;break;}else{label=7;break;}
+ case 6: 
+ var $27=$i;label=8;break;
+ case 7: 
+ var $27=$j;label=8;break;
+ case 8: 
+ var $27;
+ HEAP32[(($27)>>2)]=$20;
+ var $28=$5;
+ var $29=(((($28|0))%(2))&-1);
+ var $30=($29|0)!=0;
+ if($30){label=9;break;}else{label=10;break;}
+ case 9: 
+ var $32=$l;
+ var $33=(((-$32))|0);
+ var $37=$33;label=11;break;
+ case 10: 
+ var $35=$l;
+ var $37=$35;label=11;break;
+ case 11: 
+ var $37;
+ var $38=$5;
+ var $39=(((($38|0))/(2))&-1);
+ var $40=($39|0)!=0;
+ if($40){label=12;break;}else{label=13;break;}
+ case 12: 
+ var $44=$j;label=14;break;
+ case 13: 
+ var $44=$i;label=14;break;
+ case 14: 
+ var $44;
+ HEAP32[(($44)>>2)]=$37;
+ var $45=$1;
+ var $46=$4;
+ var $47=HEAP32[(($i)>>2)];
+ var $48=HEAP32[(($j)>>2)];
+ var $49=((($48)+(1))|0);
+ var $50=__Z12shape_insideiiii($45,$46,$47,$49);
+ var $51=($50&1);
+ $down=$51;
+ var $52=$1;
+ var $53=$4;
+ var $54=HEAP32[(($i)>>2)];
+ var $55=HEAP32[(($j)>>2)];
+ var $56=((($55)-(1))|0);
+ var $57=__Z12shape_insideiiii($52,$53,$54,$56);
+ var $58=($57&1);
+ $up=$58;
+ var $59=$1;
+ var $60=$4;
+ var $61=HEAP32[(($i)>>2)];
+ var $62=((($61)+(1))|0);
+ var $63=HEAP32[(($j)>>2)];
+ var $64=__Z12shape_insideiiii($59,$60,$62,$63);
+ var $65=($64&1);
+ $right=$65;
+ var $66=$1;
+ var $67=$4;
+ var $68=HEAP32[(($i)>>2)];
+ var $69=((($68)-(1))|0);
+ var $70=HEAP32[(($j)>>2)];
+ var $71=__Z12shape_insideiiii($66,$67,$69,$70);
+ var $72=($71&1);
+ $left=$72;
+ var $73=$1;
+ var $74=$4;
+ var $75=HEAP32[(($i)>>2)];
+ var $76=HEAP32[(($j)>>2)];
+ var $77=__Z12shape_insideiiii($73,$74,$75,$76);
+ if($77){label=15;break;}else{label=20;break;}
+ case 15: 
+ var $79=$2;
+ var $80=HEAP32[(($i)>>2)];
+ var $81=((($79)+($80))|0);
+ var $82=$3;
+ var $83=HEAP32[(($j)>>2)];
+ var $84=((($82)+($83))|0);
+ var $85=$down;
+ var $86=(($85)&1);
+ if($86){label=16;break;}else{var $97=0;label=19;break;}
+ case 16: 
+ var $88=$up;
+ var $89=(($88)&1);
+ if($89){label=17;break;}else{var $97=0;label=19;break;}
+ case 17: 
+ var $91=$left;
+ var $92=(($91)&1);
+ if($92){label=18;break;}else{var $97=0;label=19;break;}
+ case 18: 
+ var $94=$right;
+ var $95=(($94)&1);
+ var $97=$95;label=19;break;
+ case 19: 
+ var $97;
+ var $98=$97^1;
+ var $99=($98&1);
+ ___ZZ12write_cursoriiENK3$_3clEiii_($f,$81,$84,$99);
+ label=20;break;
+ case 20: 
+ label=21;break;
+ case 21: 
+ var $102=$l;
+ var $103=((($102)+(1))|0);
+ $l=$103;
+ label=4;break;
+ case 22: 
+ label=23;break;
+ case 23: 
+ var $106=$k;
+ var $107=((($106)+(1))|0);
+ $k=$107;
+ label=2;break;
+ case 24: 
+ STACKTOP=sp;return;
+  default: assert(0, "bad label: " + label);
+ }
+
+}
+
+
 function __Z4loopv(){
  var label=0;
  var sp=STACKTOP;STACKTOP=(STACKTOP+16)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -11277,15 +11556,20 @@ function __Z4loopv(){
  $i=$40;
  label=6;break;
  case 13: 
- var $42=HEAP32[((9792)>>2)];
- _SDL_UnlockSurface($42);
- var $43=HEAP32[((9792)>>2)];
- var $44=_SDL_Flip($43);
- var $45=HEAPF32[((8)>>2)];
- var $46=$45;
- var $47=($46)+((0.1));
- var $48=$47;
- HEAPF32[((8)>>2)]=$48;
+ var $42=HEAP32[((9872)>>2)];
+ var $43=(((($42|0))/(4))&-1);
+ var $44=HEAP32[((9864)>>2)];
+ var $45=(((($44|0))/(4))&-1);
+ __Z12write_cursorii($43,$45);
+ var $46=HEAP32[((9792)>>2)];
+ _SDL_UnlockSurface($46);
+ var $47=HEAP32[((9792)>>2)];
+ var $48=_SDL_Flip($47);
+ var $49=HEAPF32[((8)>>2)];
+ var $50=$49;
+ var $51=($50)+((0.1));
+ var $52=$51;
+ HEAPF32[((8)>>2)]=$52;
  STACKTOP=sp;return;
   default: assert(0, "bad label: " + label);
  }
@@ -11303,14 +11587,109 @@ function _main($argc,$argv){
  $1=0;
  $2=$argc;
  $3=$argv;
- var $4=_SDL_Init(32);
- var $5=_SDL_SetVideoMode(256,256,32,0);
- HEAP32[((9792)>>2)]=$5;
+ var $4=_time(0);
+ _srand($4);
+ var $5=_SDL_Init(32);
+ var $6=_SDL_SetVideoMode(256,256,32,0);
+ HEAP32[((9792)>>2)]=$6;
  __Z12init_sandboxii(64,64);
  _emscripten_set_main_loop(730,30,1);
  STACKTOP=sp;return 0;
 }
 Module["_main"] = _main;
+
+function ___ZZ12write_cursoriiENK3$_3clEiii_($this,$ii,$jj,$border){
+ var label=0;
+ var sp=STACKTOP;STACKTOP=(STACKTOP+32)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+ label = 1; 
+ while(1)switch(label){
+ case 1: 
+ var $1;
+ var $2;
+ var $3;
+ var $4;
+ var $r=sp;
+ var $g=(sp)+(8);
+ var $b=(sp)+(16);
+ var $a=(sp)+(24);
+ var $color;
+ var $opacity;
+ $1=$this;
+ $2=$ii;
+ $3=$jj;
+ $4=$border;
+ var $5=$1;
+ var $6=$2;
+ var $7=($6|0)>=0;
+ if($7){label=2;break;}else{label=8;break;}
+ case 2: 
+ var $9=$3;
+ var $10=($9|0)>=0;
+ if($10){label=3;break;}else{label=8;break;}
+ case 3: 
+ var $12=$2;
+ var $13=($12|0)<64;
+ if($13){label=4;break;}else{label=8;break;}
+ case 4: 
+ var $15=$3;
+ var $16=($15|0)<64;
+ if($16){label=5;break;}else{label=8;break;}
+ case 5: 
+ var $18=$2;
+ var $19=($18<<2);
+ var $20=$3;
+ var $21=($20<<2);
+ var $22=__Z10read_pixelii($19,$21);
+ $color=$22;
+ var $23=$color;
+ __Z11SDL_GetRGBAjPhS_S_S_($23,$r,$g,$b,$a);
+ $opacity=0.8999999761581421;
+ var $24=$4;
+ var $25=($24|0)!=0;
+ if($25){label=6;break;}else{label=7;break;}
+ case 6: 
+ $opacity=0.800000011920929;
+ label=7;break;
+ case 7: 
+ var $28=$2;
+ var $29=$3;
+ var $30=HEAP32[((9792)>>2)];
+ var $31=(($30+4)|0);
+ var $32=HEAP32[(($31)>>2)];
+ var $33=HEAP8[($r)];
+ var $34=($33&255);
+ var $35=($34|0);
+ var $36=$opacity;
+ var $37=($35)*($36);
+ var $38=($37>=0 ? Math_floor($37) : Math_ceil($37));
+ var $39=HEAP8[($g)];
+ var $40=($39&255);
+ var $41=($40|0);
+ var $42=$opacity;
+ var $43=($41)*($42);
+ var $44=($43>=0 ? Math_floor($43) : Math_ceil($43));
+ var $45=HEAP8[($b)];
+ var $46=($45&255);
+ var $47=($46|0);
+ var $48=$opacity;
+ var $49=($47)*($48);
+ var $50=($49>=0 ? Math_floor($49) : Math_ceil($49));
+ var $51=HEAP8[($a)];
+ var $52=($51&255);
+ var $53=($52|0);
+ var $54=$opacity;
+ var $55=($53)*($54);
+ var $56=($55>=0 ? Math_floor($55) : Math_ceil($55));
+ var $57=_SDL_MapRGBA($32,$38,$44,$50,$56);
+ __Z14write_particleiij($28,$29,$57);
+ label=8;break;
+ case 8: 
+ STACKTOP=sp;return;
+  default: assert(0, "bad label: " + label);
+ }
+
+}
+
 
 function ___ZZ12handle_mouseiihENK3$_2clEiii_($this,$ii,$jj,$border){
  var label=0;
@@ -11326,7 +11705,7 @@ function ___ZZ12handle_mouseiihENK3$_2clEiii_($this,$ii,$jj,$border){
  $3=$jj;
  $4=$border;
  var $6=$1;
- __Z16sandbox_particlei($5,4);
+ __Z16sandbox_particlei($5,9);
  var $7=$2;
  var $8=$3;
  __Z20sandbox_set_particleP7sandbox8particleii(9800,$5,$7,$8);
@@ -11388,6 +11767,45 @@ function ___ZZ14move_particlesP7sandboxiiiiiENK3$_0clEiii_($this,$ii,$jj,$border
 }
 
 
+function __Z4hashv(){
+ var label=0;
+ var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+
+ var $a;
+ var $1=HEAP32[((9784)>>2)];
+ $a=$1;
+ var $2=$a;
+ var $3=$2^61;
+ var $4=$a;
+ var $5=$4>>>16;
+ var $6=$3^$5;
+ $a=$6;
+ var $7=$a;
+ var $8=$a;
+ var $9=$8<<3;
+ var $10=((($7)+($9))|0);
+ $a=$10;
+ var $11=$a;
+ var $12=$a;
+ var $13=$12>>>4;
+ var $14=$11^$13;
+ $a=$14;
+ var $15=$a;
+ var $16=(Math_imul($15,668265261)|0);
+ $a=$16;
+ var $17=$a;
+ var $18=$a;
+ var $19=$18>>>15;
+ var $20=$17^$19;
+ $a=$20;
+ var $21=HEAP32[((9784)>>2)];
+ var $22=((($21)+(1))|0);
+ HEAP32[((9784)>>2)]=$22;
+ var $23=$a;
+ STACKTOP=sp;return $23;
+}
+
+
 function __Z16sandbox_particlei($agg_result,$id){
  var label=0;
  var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -11397,7 +11815,7 @@ function __Z16sandbox_particlei($agg_result,$id){
  var $2=$1;
  var $3=(($agg_result)|0);
  HEAP32[(($3)>>2)]=$2;
- var $4=_rand();
+ var $4=__Z4hashv();
  var $5=(($agg_result+8)|0);
  HEAP32[(($5)>>2)]=$4;
  var $6=(($agg_result+4)|0);
@@ -11909,45 +12327,6 @@ function __Z24sandbox_protect_particleP7sandboxii($sandbox,$i,$j){
   default: assert(0, "bad label: " + label);
  }
 
-}
-
-
-function __Z4hashv(){
- var label=0;
- var sp=STACKTOP; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
-
- var $a;
- var $1=HEAP32[((9784)>>2)];
- $a=$1;
- var $2=$a;
- var $3=$2^61;
- var $4=$a;
- var $5=$4>>>16;
- var $6=$3^$5;
- $a=$6;
- var $7=$a;
- var $8=$a;
- var $9=$8<<3;
- var $10=((($7)+($9))|0);
- $a=$10;
- var $11=$a;
- var $12=$a;
- var $13=$12>>>4;
- var $14=$11^$13;
- $a=$14;
- var $15=$a;
- var $16=(Math_imul($15,668265261)|0);
- $a=$16;
- var $17=$a;
- var $18=$a;
- var $19=$18>>>15;
- var $20=$17^$19;
- $a=$20;
- var $21=HEAP32[((9784)>>2)];
- var $22=((($21)+(1))|0);
- HEAP32[((9784)>>2)]=$22;
- var $23=$a;
- STACKTOP=sp;return $23;
 }
 
 
@@ -12491,8 +12870,8 @@ function __Z21sandbox_update_regionP7sandboxiiii($sandbox,$x,$y,$w,$h){
  var $10=HEAP32[(($9)>>2)];
  var $11=((($10)+(1))|0);
  HEAP32[(($9)>>2)]=$11;
- var $12=_rand();
- var $13=(((($12|0))%(2))&-1);
+ var $12=__Z4hashv();
+ var $13=(((($12>>>0))%(2))&-1);
  $jdir=$13;
  var $14=$jdir;
  var $15=($14|0)!=0;
@@ -12528,8 +12907,8 @@ function __Z21sandbox_update_regionP7sandboxiiii($sandbox,$x,$y,$w,$h){
  var $37=($35|0)>=($36|0);
  if($37){label=8;break;}else{label=34;break;}
  case 8: 
- var $39=_rand();
- var $40=(((($39|0))%(2))&-1);
+ var $39=__Z4hashv();
+ var $40=(((($39>>>0))%(2))&-1);
  $idir=$40;
  var $41=$idir;
  var $42=($41|0)!=0;
@@ -26234,6 +26613,7 @@ function __ZNKSt3__18time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE
 }
 
 
+
 function __ZNKSt3__18time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjP2tmcc($agg_result,$this,$__b,$__e,$__iob,$__err,$__tm,$__fmt,$0){
  var label=0;
  var sp=STACKTOP;STACKTOP=(STACKTOP+328)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -26930,7 +27310,6 @@ function __ZNKSt3__18time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE
  }
 
 }
-
 
 
 function __ZNKSt3__18time_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE17__get_white_spaceERS4_S4_RjRKNS_5ctypeIcEE($this,$__b,$__e,$__err,$__ct){
@@ -39884,6 +40263,7 @@ function __ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv($this){
 }
 
 
+
 function __ZNSt3__16locale5__impC2Ej($this,$refs){
  var label=0;
  var sp=STACKTOP;STACKTOP=(STACKTOP+448)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -41085,7 +41465,6 @@ function __ZNSt3__16localeD2Ev($this){
  var $4=__ZNSt3__114__shared_count16__release_sharedEv($3);
  return;
 }
-
 
 
 function __ZNKSt3__16locale9use_facetERNS0_2idE($this,$x){
@@ -54351,6 +54730,7 @@ function __ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE2
 }
 
 
+
 function __ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE23__do_get_floating_pointIeEES4_S4_S4_RNS_8ios_baseERjRT_($agg_result,$this,$__b,$__e,$__iob,$__err,$__v){
  var label=0;
  var sp=STACKTOP;STACKTOP=(STACKTOP+376)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
@@ -56346,7 +56726,6 @@ function __ZNSt3__1L13utf16_to_utf8EPKtS1_RS1_PhS3_RS3_mNS_12codecvt_modeE($frm,
  }
 
 }
-
 
 
 function __ZNSt3__1L13utf8_to_utf16EPKhS1_RS1_PtS3_RS3_mNS_12codecvt_modeE($frm,$frm_end,$frm_nxt,$to,$to_end,$to_nxt,$Maxcode,$mode){
