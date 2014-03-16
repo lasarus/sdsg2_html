@@ -5940,6 +5940,19 @@ function copyTempDouble(ptr) {
       return SDL.buttonState;
     }
 
+  function _SDL_PollEvent(ptr) {
+      if (SDL.initFlags & 0x200 && SDL.joystickEventState) {
+        // If SDL_INIT_JOYSTICK was supplied AND the joystick system is configured
+        // to automatically query for events, query for joystick events.
+        SDL.queryJoysticks();
+      }
+      if (SDL.events.length === 0) return 0;
+      if (ptr) {
+        SDL.makeCEvent(SDL.events.shift(), ptr);
+      }
+      return 1;
+    }
+
   function _SDL_UnlockSurface(surf) {
       assert(!SDL.GL); // in GL mode we do not keep around 2D canvases and contexts
   
@@ -9703,16 +9716,77 @@ function __Z15epsilon_updaterP7sandbox8particleii($sandbox,$self,$i,$j){
 }
 
 
-function __Z12init_sandboxii($w,$h){
+function __Z14init_landscapev(){
  var label=0;
- var sp=STACKTOP;STACKTOP=(STACKTOP+544)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+ var sp=STACKTOP;STACKTOP=(STACKTOP+32)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
  label = 1; 
  while(1)switch(label){
  case 1: 
- var $1;
- var $2;
  var $i;
  var $j;
+ var $1=sp;
+ var $2=(sp)+(16);
+ $i=0;
+ label=2;break;
+ case 2: 
+ var $4=$i;
+ var $5=HEAP32[((9800)>>2)];
+ var $6=($4|0)<($5|0);
+ if($6){label=3;break;}else{label=12;break;}
+ case 3: 
+ $j=0;
+ label=4;break;
+ case 4: 
+ var $9=$j;
+ var $10=HEAP32[((9804)>>2)];
+ var $11=($9|0)<($10|0);
+ if($11){label=5;break;}else{label=10;break;}
+ case 5: 
+ var $13=$j;
+ var $14=HEAP32[((9804)>>2)];
+ var $15=(((($14|0))/(2))&-1);
+ var $16=($13|0)>=($15|0);
+ if($16){label=6;break;}else{label=7;break;}
+ case 6: 
+ __Z16sandbox_particlei($1,4);
+ var $18=$i;
+ var $19=$j;
+ __Z20sandbox_set_particleP7sandbox8particleii(9800,$1,$18,$19);
+ label=8;break;
+ case 7: 
+ __Z16sandbox_particlei($2,0);
+ var $21=$i;
+ var $22=$j;
+ __Z20sandbox_set_particleP7sandbox8particleii(9800,$2,$21,$22);
+ label=8;break;
+ case 8: 
+ label=9;break;
+ case 9: 
+ var $25=$j;
+ var $26=((($25)+(1))|0);
+ $j=$26;
+ label=4;break;
+ case 10: 
+ label=11;break;
+ case 11: 
+ var $29=$i;
+ var $30=((($29)+(1))|0);
+ $i=$30;
+ label=2;break;
+ case 12: 
+ STACKTOP=sp;return;
+  default: assert(0, "bad label: " + label);
+ }
+
+}
+
+
+function __Z12init_sandboxii($w,$h){
+ var label=0;
+ var sp=STACKTOP;STACKTOP=(STACKTOP+528)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+
+ var $1;
+ var $2;
  var $3=sp;
  var $4=(sp)+(16);
  var $5=(sp)+(32);
@@ -9746,127 +9820,82 @@ function __Z12init_sandboxii($w,$h){
  var $33=(sp)+(480);
  var $34=(sp)+(496);
  var $35=(sp)+(512);
- var $36=(sp)+(528);
  $1=$w;
  $2=$h;
+ var $36=$1;
  var $37=$1;
- var $38=$1;
- __Z12sandbox_initP7sandboxii(9800,$37,$38);
- $i=0;
- label=2;break;
- case 2: 
- var $40=$i;
- var $41=$1;
- var $42=($40|0)<($41|0);
- if($42){label=3;break;}else{label=11;break;}
- case 3: 
- $j=0;
- label=4;break;
- case 4: 
- var $45=$j;
- var $46=$2;
- var $47=($45|0)<($46|0);
- if($47){label=5;break;}else{label=9;break;}
- case 5: 
- var $49=$j;
- var $50=$2;
- var $51=(((($50|0))/(2))&-1);
- var $52=($49|0)>=($51|0);
- if($52){label=6;break;}else{label=7;break;}
- case 6: 
- __Z16sandbox_particlei($3,4);
- var $54=$i;
- var $55=$j;
- __Z20sandbox_set_particleP7sandbox8particleii(9800,$3,$54,$55);
- label=7;break;
- case 7: 
- label=8;break;
- case 8: 
- var $58=$j;
- var $59=((($58)+(1))|0);
- $j=$59;
- label=4;break;
- case 9: 
- label=10;break;
- case 10: 
- var $62=$i;
- var $63=((($62)+(1))|0);
- $i=$63;
- label=2;break;
- case 11: 
+ __Z12sandbox_initP7sandboxii(9800,$36,$37);
+ __Z14init_landscapev();
  __Z17sandbox_init_ruleP7sandboxiiii(9800,34,1,5,0);
+ __Z21sandbox_particle_rule5statei($3,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,5,$3);
  __Z21sandbox_particle_rule5statei($4,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,5,$4);
- __Z21sandbox_particle_rule5statei($5,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,6,$5);
- __Z21sandbox_particle_rule5statei($6,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,9,$6);
- __Z21sandbox_particle_rule5statei($7,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,7,$7);
- __Z21sandbox_particle_rule5statei($8,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,8,$8);
- __Z21sandbox_particle_rule5statei($9,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,25,$9);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,6,$4);
+ __Z21sandbox_particle_rule5statei($5,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,9,$5);
+ __Z21sandbox_particle_rule5statei($6,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,7,$6);
+ __Z21sandbox_particle_rule5statei($7,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,8,$7);
+ __Z21sandbox_particle_rule5statei($8,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,25,$8);
+ __Z21sandbox_particle_rule5statei($9,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,26,$9);
  __Z21sandbox_particle_rule5statei($10,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,26,$10);
- __Z21sandbox_particle_rule5statei($11,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,4,$11);
- __Z21sandbox_particle_rule5statei($12,0,10);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,1,$12);
- __Z21sandbox_particle_rule5statei($13,3,1);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,3,$13);
- __Z21sandbox_particle_rule5statei($14,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,24,$14);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($15,0,30,174);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,2,$15);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,4,$10);
+ __Z21sandbox_particle_rule5statei($11,0,10);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,1,$11);
+ __Z21sandbox_particle_rule5statei($12,3,1);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,3,$12);
+ __Z21sandbox_particle_rule5statei($13,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,24,$13);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($14,0,30,174);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,2,$14);
+ __Z21sandbox_particle_rule5statei($15,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,10,$15);
  __Z21sandbox_particle_rule5statei($16,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,10,$16);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,12,$16);
  __Z21sandbox_particle_rule5statei($17,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,12,$17);
- __Z21sandbox_particle_rule5statei($18,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,13,$18);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($19,1,30,614);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,16,$19);
- __Z21sandbox_particle_rule5statei($20,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,11,$20);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,13,$17);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($18,1,30,614);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,16,$18);
+ __Z21sandbox_particle_rule5statei($19,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,11,$19);
+ __Z21sandbox_particle_rule5statei($20,4,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,14,$20);
  __Z21sandbox_particle_rule5statei($21,4,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,14,$21);
- __Z21sandbox_particle_rule5statei($22,4,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,15,$22);
- __Z21sandbox_particle_rule5statei($23,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,18,$23);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($24,1,30,410);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,17,$24);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($25,3,1,154);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,19,$25);
- __Z21sandbox_particle_rule5statei($26,3,1);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,20,$26);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,15,$21);
+ __Z21sandbox_particle_rule5statei($22,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,18,$22);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($23,1,30,410);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,17,$23);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($24,3,1,154);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,19,$24);
+ __Z21sandbox_particle_rule5statei($25,3,1);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,20,$25);
+ __Z21sandbox_particle_rule5statei($26,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,21,$26);
  __Z21sandbox_particle_rule5statei($27,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,21,$27);
- __Z21sandbox_particle_rule5statei($28,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,27,$28);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($29,0,10,294);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,29,$29);
- __Z21sandbox_particle_rule5statei($30,0,10);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,30,$30);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($31,0,10,498);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,31,$31);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($32,0,10,550);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,32,$32);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($33,0,10,678);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,33,$33);
- __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($34,0,10,230);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,28,$34);
- __Z21sandbox_particle_rule5statei($35,2,99);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,22,$35);
- __Z21sandbox_particle_rule5statei($36,1,30);
- __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,23,$36);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,27,$27);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($28,0,10,294);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,29,$28);
+ __Z21sandbox_particle_rule5statei($29,0,10);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,30,$29);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($30,0,10,498);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,31,$30);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($31,0,10,550);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,32,$31);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($32,0,10,678);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,33,$32);
+ __Z30sandbox_advanced_particle_rule5stateiPFiP7sandbox8particleiiE($33,0,10,230);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,28,$33);
+ __Z21sandbox_particle_rule5statei($34,2,99);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,22,$34);
+ __Z21sandbox_particle_rule5statei($35,1,30);
+ __Z16sandbox_set_ruleP7sandboxi13particle_rule(9800,23,$35);
  HEAP32[((9832)>>2)]=5;
  HEAP32[((9828)>>2)]=0;
  STACKTOP=sp;return;
-  default: assert(0, "bad label: " + label);
- }
-
 }
 
 
@@ -11482,15 +11511,17 @@ function ___Z10shape_fillIZ12write_cursoriiE3$_3EviiiiT_i_($shape,$x,$y,$size,$f
 
 function __Z4loopv(){
  var label=0;
- var sp=STACKTOP;STACKTOP=(STACKTOP+16)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
+ var sp=STACKTOP;STACKTOP=(STACKTOP+64)|0; (assert((STACKTOP|0) < (STACK_MAX|0))|0);
  label = 1; 
  while(1)switch(label){
  case 1: 
  var $i;
  var $j;
  var $state;
- var $border=sp;
- var $color=(sp)+(8);
+ var $event=sp;
+ var $key;
+ var $border=(sp)+(48);
+ var $color=(sp)+(56);
  _SDL_PumpEvents();
  var $1=HEAP32[((9792)>>2)];
  var $2=_SDL_LockSurface($1);
@@ -11519,57 +11550,84 @@ function __Z4loopv(){
  $i=$17;
  label=2;break;
  case 5: 
- $i=0;
  label=6;break;
  case 6: 
- var $20=$i;
- var $21=HEAP32[((9800)>>2)];
- var $22=($20|0)<($21|0);
- if($22){label=7;break;}else{label=13;break;}
+ var $20=_SDL_PollEvent($event);
+ var $21=($20|0)!=0;
+ if($21){label=7;break;}else{label=12;break;}
  case 7: 
- $j=0;
- label=8;break;
+ var $23=$event;
+ var $24=HEAP32[(($23)>>2)];
+ var $25=($24|0)==768;
+ if($25){label=8;break;}else{label=11;break;}
  case 8: 
- var $25=$j;
- var $26=HEAP32[((9804)>>2)];
- var $27=($25|0)<($26|0);
- if($27){label=9;break;}else{label=11;break;}
+ var $27=$event;
+ var $28=(($27+12)|0);
+ var $29=(($28+4)|0);
+ var $30=HEAP32[(($29)>>2)];
+ $key=$30;
+ var $31=$key;
+ var $32=($31|0)==99;
+ if($32){label=9;break;}else{label=10;break;}
  case 9: 
- var $29=$i;
- var $30=$j;
- __Z17get_particle_infoiiPjPi($29,$30,$color,$border);
- var $31=$i;
- var $32=$j;
- var $33=HEAP32[(($color)>>2)];
- __Z14write_particleiij($31,$32,$33);
+ __Z14init_landscapev();
  label=10;break;
  case 10: 
- var $35=$j;
- var $36=((($35)+(1))|0);
- $j=$36;
- label=8;break;
+ label=11;break;
  case 11: 
- label=12;break;
- case 12: 
- var $39=$i;
- var $40=((($39)+(1))|0);
- $i=$40;
  label=6;break;
+ case 12: 
+ $i=0;
+ label=13;break;
  case 13: 
- var $42=HEAP32[((9872)>>2)];
- var $43=(((($42|0))/(4))&-1);
- var $44=HEAP32[((9864)>>2)];
- var $45=(((($44|0))/(4))&-1);
- __Z12write_cursorii($43,$45);
- var $46=HEAP32[((9792)>>2)];
- _SDL_UnlockSurface($46);
- var $47=HEAP32[((9792)>>2)];
- var $48=_SDL_Flip($47);
- var $49=HEAPF32[((8)>>2)];
- var $50=$49;
- var $51=($50)+((0.1));
- var $52=$51;
- HEAPF32[((8)>>2)]=$52;
+ var $38=$i;
+ var $39=HEAP32[((9800)>>2)];
+ var $40=($38|0)<($39|0);
+ if($40){label=14;break;}else{label=20;break;}
+ case 14: 
+ $j=0;
+ label=15;break;
+ case 15: 
+ var $43=$j;
+ var $44=HEAP32[((9804)>>2)];
+ var $45=($43|0)<($44|0);
+ if($45){label=16;break;}else{label=18;break;}
+ case 16: 
+ var $47=$i;
+ var $48=$j;
+ __Z17get_particle_infoiiPjPi($47,$48,$color,$border);
+ var $49=$i;
+ var $50=$j;
+ var $51=HEAP32[(($color)>>2)];
+ __Z14write_particleiij($49,$50,$51);
+ label=17;break;
+ case 17: 
+ var $53=$j;
+ var $54=((($53)+(1))|0);
+ $j=$54;
+ label=15;break;
+ case 18: 
+ label=19;break;
+ case 19: 
+ var $57=$i;
+ var $58=((($57)+(1))|0);
+ $i=$58;
+ label=13;break;
+ case 20: 
+ var $60=HEAP32[((9872)>>2)];
+ var $61=(((($60|0))/(4))&-1);
+ var $62=HEAP32[((9864)>>2)];
+ var $63=(((($62|0))/(4))&-1);
+ __Z12write_cursorii($61,$63);
+ var $64=HEAP32[((9792)>>2)];
+ _SDL_UnlockSurface($64);
+ var $65=HEAP32[((9792)>>2)];
+ var $66=_SDL_Flip($65);
+ var $67=HEAPF32[((8)>>2)];
+ var $68=$67;
+ var $69=($68)+((0.1));
+ var $70=$69;
+ HEAPF32[((8)>>2)]=$70;
  STACKTOP=sp;return;
   default: assert(0, "bad label: " + label);
  }
