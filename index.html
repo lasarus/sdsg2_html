@@ -11,6 +11,8 @@
 	<script type="text/javascript">
 	  var button = 0;
 	  var checked;
+	  var size = 4;
+	  var shape = 0;
 	  function doAction(value)
 	  {
 	  button = value;
@@ -33,6 +35,15 @@
 	<button onclick="doAction(6)">Water</button>
 	<button onclick="doAction(2)">Erase</button>
 	<button onclick="doAction(3)">Move</button>
+      <p>
+      <p>
+	<input type="number" id="size" value="4">Cursor Size</input>
+      <p>
+      <p>
+	Shape:
+	<input type="radio" name="group1" id="circle" checked> Circle
+	<input type="radio" name="group1" id="triangle"> Triangle
+	<input type="radio" name="group1" id="square"> Square
       <p>
       <p><input type="checkbox" id="replace" onclick="getChecked();">replace</input><p>
 	<a href="https://twitter.com/llasarus" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @llasarus</a>
