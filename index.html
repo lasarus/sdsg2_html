@@ -6,10 +6,37 @@
   </head>
   <body>
     <center>
-      <canvas  id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-      <p>C - Reset Sandbox</p>
-      <p>Right Click - Add Gravel</p>
-      <p>Left Click - Move Particles</p>
+      <p><u><b>SDSG2 Physics Demo</b></u><p>
+	<canvas  id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+	<script type="text/javascript">
+	  var button = 0;
+	  var checked;
+	  function doAction(value)
+	  {
+	  button = value;
+	  }
+
+	  function getChecked()
+	  {
+	  checked = document.getElementById('replace').checked;
+	  }
+
+	  //function reset()
+	  //{
+	  //alert("Resetting sandbox!");
+	  //Module.ccall(init_landscape');
+	  //}
+	</script>
+      <p>
+	<button onclick="doAction(0)">Sand</button>
+	<button onclick="doAction(1)">Stone</button>
+	<button onclick="doAction(6)">Water</button>
+	<button onclick="doAction(2)">Erase</button>
+	<button onclick="doAction(3)">Move</button>
+      <p>
+      <p><input type="checkbox" id="replace" onclick="getChecked();">replace</input><p>
+	<a href="https://twitter.com/llasarus" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @llasarus</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </center>
     <script type='text/javascript'>
       var Module = {
